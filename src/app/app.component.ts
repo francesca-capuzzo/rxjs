@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './services/data.service';
 import { ApiService } from './services/api.service';
-import { Data } from './data';
+import { Data } from './model/data';
 import { Observable, observable } from 'rxjs';
 
 
@@ -12,7 +12,7 @@ import { Observable, observable } from 'rxjs';
 })
 export class AppComponent implements OnInit{
 
-  logData: Data[] = [];
+  seaDataArray: Data[] = [];
 
   constructor(private dataServ: DataService, private apiServ: ApiService){
 
@@ -28,8 +28,8 @@ export class AppComponent implements OnInit{
     //this.dataServ.counter.subscribe(count => console.log(count)); //logga il counter +1
     //this.dataServ.getCounter().subscribe(count => console.log(count)); //logga il counter * counter;
 
-
-    this.apiServ.getApi().subscribe(data => this.logData = data);
+    this.apiServ.getApi().subscribe(data => this.seaDataArray = data);
+    
 
   }
 
@@ -42,6 +42,7 @@ export class AppComponent implements OnInit{
   //   if (this.logData.value) {
   //   }
   // }
+
 
 
 }
