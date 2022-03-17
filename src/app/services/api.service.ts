@@ -17,8 +17,10 @@ export class ApiService {
   getApi(): Observable<Data[]> {
     return this.http.get<any>(this.API_URL, this.httpOptions).pipe(
       map((data) => this.parseCSVtoJSON(data)),
-      map(this.assignIcon),
-      map((data) => this.assignIconByAverage(data))
+      map(this.assignIcon), //può essere scritto con una lambda ma non avendo altri 'this' all'interno della funzione, non è strettamente necessaria
+      map((data) => this.assignIconByAverage(data)), //non può essere scritto come map(this.assignIconByAverage) --> ERROR: 'this is undefined' perchè chiamo già il this.calculateAverage all'interno della funzione 
+      //--> questo perchè le lambda fanno closure e si ricordano dei parametri che avevano all'interno nel momento in cui sono stati istanziati
+      map((data) => data.sort((d1,d2) => d1.date.getTime() - d2.date.getTime())),
     );
   }
 
